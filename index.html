@@ -15,29 +15,34 @@
 
       
 
-        // Check the connection
-        if ($config->connect_error) {
-            die("Connection failed: " . $config->connect_error);
+      // Check the connection
+if ($config->connect_error) {
+    die("Connection failed: " . $config->connect_error);
+}
+
+// SQL query to retrieve data
+$sql = "SELECT * FROM blog";
+$result = $config->query($sql);
+
+// Display data
+if ($result) {
+    if ($result->num_rows > 0) {
+        echo "<h2>Data from Database</h2><ul>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<li>Title: " . $row["blog_title"] . " - Thumbnail Link: " . $row["blog_media_link"] . "</li>";
         }
+        echo "</ul>";
+    } else {
+        echo "0 results";
+    }
+    $result->free(); // Free the result set
+} else {
+    echo "Error in the query: " . $config->error;
+}
 
-        // SQL query to retrieve data
-        $sql = "SELECT * FROM blog";
-        $result = $config->query($sql);
-
-        // Display data
-        if ($result->num_rows > 0) {
-            echo "<ul>";
-            while($row = $result->fetch_assoc()) {
-                echo "<li>Title: " . $row["blog_title"]. " - Thumbnail Link: " . $row["blog_media_link"]. "</li>";
-            }
-            echo "</ul>";
-        } else {
-            echo "0 results";
-        }
-
-        // Close the connection
-        $config->close();
-    ?>
+// Close the connection
+$config->close();
+?>
 
 </body>
 </html>
