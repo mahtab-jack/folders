@@ -9,7 +9,7 @@ table tbody tr td {
 }
 
 table thead th{
-  color: maroon !important;
+  color: #dc3545;
 }
 
 :root {
